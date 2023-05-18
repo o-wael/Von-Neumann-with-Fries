@@ -64,7 +64,7 @@ public class PipelineRegisters {
             propagate_ID_EX();
             propagate_EX_MEM();
             if (clockCycle > 6 && MEM_WB.getOrDefault("regWrite", 0) == 1) {
-                RegisterFile.getRegisterFileInstance().writeToRegister(MEM_WB.getOrDefault("rd", 0), MEM_WB.getOrDefault("rdValue", 0));
+                RegisterFile.getRegisterFileInstance().writeToRegister(MEM_WB.getOrDefault("r1", 0), MEM_WB.getOrDefault("rdValue", 0));
             }
         } else {
 

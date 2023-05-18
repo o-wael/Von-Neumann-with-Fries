@@ -12,6 +12,10 @@ public class RegisterFile {
         pc = 0;
     }
 
+    public void setPC(int pc) {
+        this.pc = pc;
+    }
+
     public static RegisterFile getRegisterFileInstance() {
         return registerFileInstance;
     }
@@ -27,4 +31,7 @@ public class RegisterFile {
         return registerFileInstance.registerFile[registerNumber];
     }
 
+    public int getPC() {
+        return pc;
+    }
 }
