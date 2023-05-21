@@ -1,11 +1,15 @@
 package org.example;
 
+import memory.MainMemory;
 import memory.RegisterFile;
+import parser.Parser;
+
+import java.io.FileNotFoundException;
 
 public class Main {
 
     int x;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 //        System.out.println("Hello world!");
 //
 //        int[] arr = new int[3];
@@ -21,8 +25,14 @@ public class Main {
 //        int newPC = (oldPC & 0b11110000000000000000000000000000) | 0b11;
 //        System.out.print(Integer.toBinaryString(newPC));
 
-        System.out.println();
+//        System.out.println();
 
+        Parser.readAssemblyFile();
+        System.out.println(MainMemory.getMainMemoryInstance().getCurNumOfInstructions());
+        for(String s: MainMemory.getMainMemoryInstance().getAssemblyMemory()) {
+            if (s != null)
+                System.out.println(s);
+        }
     }
     
 }

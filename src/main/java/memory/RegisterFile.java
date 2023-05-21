@@ -2,18 +2,14 @@ package memory;
 
 public class RegisterFile {
 
-    private int[] registerFile;
     private static final int numOfRegisters = 32;
-    private int pc;
     private static final RegisterFile registerFileInstance = new RegisterFile();
+    private int[] registerFile;
+    private int pc;
 
     private RegisterFile() {
         registerFile = new int[numOfRegisters];
         pc = 0;
-    }
-
-    public void setPC(int pc) {
-        this.pc = pc;
     }
 
     public static RegisterFile getRegisterFileInstance() {
@@ -33,5 +29,18 @@ public class RegisterFile {
 
     public int getPC() {
         return pc;
+    }
+
+    public void setPC(int pc) {
+        this.pc = pc;
+    }
+
+    public void printRegisters() {
+        System.out.println("Register File:");
+        for (int i = 0; i < numOfRegisters; i++) {
+            System.out.println("R" + i + ": " + registerFile[i]);
+        }
+        System.out.println("PC: " + pc);
+        System.out.println("--------------------End of Register File--------------------");
     }
 }

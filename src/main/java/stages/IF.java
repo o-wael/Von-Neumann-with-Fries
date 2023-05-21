@@ -6,32 +6,42 @@ import memory.RegisterFile;
 
 public class IF {
 
-    private int pc;
-    private int instructionNumber;
-
     private static final IF ifInstance = new IF();
+    private int pc;
+
+    public static IF getIFInstance() {
+        return ifInstance;
+    }
 
     public void fetchInstruction(int pc) {
         int newInstruction = MainMemory.getMainMemoryInstance().memRead(pc);
         PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("instructionLeft", newInstruction);
+        PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("pcLeft", pc);
+        PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("availableLeft", 1);
         this.pc = pc;
-        RegisterFile.getRegisterFileInstance().setPC(pc + 1);
-    }
-
-    public static void propagate(int clockCycle) {
-
-    //TODO
-
+        if (pc <= 1023)
+            RegisterFile.getRegisterFileInstance().setPC(pc + 1);
     }
 
     public void print() {
-        System.out.println("Instruction Being Executed in IF stage: " + instructionNumber);
-        System.out.println("Inputs:\nPC: " + pc);
-        System.out.println("Outputs:\nInstruction: " + PipelineRegisters.getPipelineRegisterInstance().getIF_ID().get("instructionLeft"));
+        if (PipelineRegisters.getPipelineRegisterInstance().getIF_ID().get("availableLeft") == 0) {
+            System.out.println("No instruction is executed in IF stage");
+            return;
+        }
+        System.out.println("Instruction Being Executed in IF stage: " + MainMemory.getMainMemoryInstance().assemblyRead(pc));
+        printInput();
+        System.out.println("--------------------------------------------------");
+        System.out.print("Outputs: ");
+        printOutput();
+        System.out.println("--------------------------------------------------");
     }
 
-    public static IF getIFInstance() {
-        return ifInstance;
+    public void printInput() {
+        System.out.println("Inputs:\nPC: " + pc);
+    }
+
+    public void printOutput() {
+        System.out.println("Instruction: " + Integer.toBinaryString(MainMemory.getMainMemoryInstance().memRead(pc)));
     }
 
 }
