@@ -1,5 +1,6 @@
 package stages;
 
+import control.ControlUnit;
 import memory.MainMemory;
 import memory.PipelineRegisters;
 import memory.RegisterFile;
@@ -14,13 +15,13 @@ public class EX {
         return exInstance;
     }
 
-    public void Execute() {
+    public void executeInstruction() {
 
         HashMap<String, Integer> ID_EX = PipelineRegisters.getPipelineRegisterInstance().getID_EX();
+        HashMap<String, Integer> EX_MEM = PipelineRegisters.getPipelineRegisterInstance().getEX_MEM();
+//        System.out.println("InExecute---------------->availableRightInID_EX = " + ID_EX.getOrDefault("availableRight", 0));
 
-        if (ID_EX.getOrDefault("availableRight", 0) == 0)
-            return;
-
+        EX_MEM.put("availableLeft", ID_EX.getOrDefault("availableRight", 0));
         int opcode = ID_EX.getOrDefault("opcodeRight", 0);
         int r1Content = ID_EX.getOrDefault("r1ContentRight", 0);
         int r2Content = ID_EX.getOrDefault("r2ContentRight", 0);
@@ -31,6 +32,11 @@ public class EX {
         int r1 = ID_EX.getOrDefault("r1Right", 0);
         int regWrite = ID_EX.getOrDefault("regWriteRight", 0);
         int ALUResult = 0;
+        ControlUnit.getControlUnitInstance().setBranchFlag(false);
+        if (ID_EX.getOrDefault("availableRight", 0) == 0) {
+            return;
+        }
+
 
         switch (opcode) {
             case 0 ->
@@ -42,12 +48,19 @@ public class EX {
             case 2 ->
                 //muli
                     ALUResult = r2Content * immediate;
-            case 3 ->
+            case 3 -> {
                 //addi
-                    ALUResult = r2Content + immediate;
-            case 4 ->
+                ALUResult = r2Content + immediate;
+            }
+            case 4 -> {
                 //bne
-                    ALUResult = r1Content - r2Content;
+                ALUResult = r1Content - r2Content;
+                if (ALUResult != 0) {
+                    int newPC = PipelineRegisters.getPipelineRegisterInstance().getID_EX().getOrDefault("pcRight", 0) + 1 + immediate;
+                    RegisterFile.getRegisterFileInstance().setPC(newPC);
+                    ControlUnit.getControlUnitInstance().setBranchFlag(true);
+                }
+            }
             case 5 ->
                 //andi
                     ALUResult = r2Content & immediate;
@@ -56,9 +69,12 @@ public class EX {
                     ALUResult = r2Content | immediate;
             case 7 -> {
                 //j
-                int oldPC = RegisterFile.getRegisterFileInstance().getPC();
+                int oldPC = PipelineRegisters.getPipelineRegisterInstance().getID_EX().getOrDefault("pcRight", 0);
+//                System.out.println("Address--------------------------->" + address);
                 //concatenate bits 31:28 of oldPC with bits 27:0 of address
                 ALUResult = (oldPC & 0b11110000000000000000000000000000) | address;
+                RegisterFile.getRegisterFileInstance().setPC(ALUResult);
+                ControlUnit.getControlUnitInstance().setBranchFlag(true);
             }
             case 8 ->
                 //sll
@@ -66,15 +82,16 @@ public class EX {
             case 9 ->
                 //srl
                     ALUResult = r2Content >>> shamt;
-            case 10 ->
-                //lw
-                    ALUResult = r2Content + immediate;
-            case 11 ->
-                //sw
-                    ALUResult = r2Content + immediate;
+            case 10, 11 -> {
+                //lw & sw
+                ALUResult = r2Content + immediate;
+                if (ALUResult < 1024) {
+                    ALUResult += 1024;
+                }
+            }
+
         }
 
-        HashMap<String, Integer> EX_MEM = PipelineRegisters.getPipelineRegisterInstance().getEX_MEM();
 
         EX_MEM.put("opcodeLeft", opcode);
         EX_MEM.put("r1Left", r1);
@@ -83,7 +100,7 @@ public class EX {
         EX_MEM.put("regWriteLeft", regWrite);
         EX_MEM.put("ALUResultLeft", ALUResult);
         EX_MEM.put("pcLeft", ID_EX.getOrDefault("pcRight", 0));
-        EX_MEM.put("availableLeft", ID_EX.getOrDefault("availableRight", 0));
+
 
     }
 
@@ -127,6 +144,7 @@ public class EX {
         System.out.println("Immediate: " + EX_MEM.get("immediateLeft"));
         System.out.println("Register Write: " + EX_MEM.get("regWriteLeft"));
         System.out.println("ALU Result: " + EX_MEM.get("ALUResultLeft"));
+        System.out.println("available: " + PipelineRegisters.getPipelineRegisterInstance().getID_EX().get("availableRight"));
     }
 
 }

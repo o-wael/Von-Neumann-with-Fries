@@ -22,7 +22,9 @@ public class MEM {
     public void MemoryManipulation() {
 
         HashMap<String, Integer> EX_MEM = PipelineRegisters.getPipelineRegisterInstance().getEX_MEM();
+        HashMap<String, Integer> MEM_WB = PipelineRegisters.getPipelineRegisterInstance().getMEM_WB();
 
+        MEM_WB.put("availableLeft", EX_MEM.getOrDefault("availableRight", 0));
         if (EX_MEM.getOrDefault("availableRight", 0) == 0) {
             return;
         }
@@ -40,7 +42,7 @@ public class MEM {
             MainMemory.getMainMemoryInstance().memWrite(ALUResult, r1Content);
         }
 
-        HashMap<String, Integer> MEM_WB = PipelineRegisters.getPipelineRegisterInstance().getMEM_WB();
+
 
         MEM_WB.put("opcodeLeft", opcode);
         MEM_WB.put("r1Left", r1);
@@ -48,7 +50,7 @@ public class MEM {
         MEM_WB.put("regWriteLeft", regWrite);
         MEM_WB.put("ALUResultLeft", ALUResult);
         MEM_WB.put("pcLeft", EX_MEM.getOrDefault("pcRight", 0));
-        MEM_WB.put("availableLeft", EX_MEM.getOrDefault("availableRight", 0));
+
 
     }
 
@@ -88,6 +90,7 @@ public class MEM {
         System.out.println("R1 Content: " + MEM_WB.get("r1ContentLeft"));
         System.out.println("Register Write: " + MEM_WB.get("regWriteLeft"));
         System.out.println("ALU Result: " + MEM_WB.get("ALUResultLeft"));
+        System.out.println("available: " + PipelineRegisters.getPipelineRegisterInstance().getEX_MEM().get("availableRight"));
 
     }
 

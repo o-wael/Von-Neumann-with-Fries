@@ -32,14 +32,17 @@ public class WB {
         int r1Content = MEM_WB.get("r1ContentRight");
         int regWrite = MEM_WB.get("regWriteRight");
         int ALUResult = MEM_WB.get("ALUResultRight");
-
+        int x=0;
         if (regWrite == 1) {
             if (opcode == 0 || opcode == 1 || opcode == 2 || opcode == 3 || opcode == 5 || opcode == 6 || opcode == 8 || opcode == 9) {
                 RegisterFile.getRegisterFileInstance().writeToRegister(r1, ALUResult);
+                //TODO remove this
+                x = RegisterFile.getRegisterFileInstance().readFromRegister(r1);
             } else if (opcode == 10) {
                 RegisterFile.getRegisterFileInstance().writeToRegister(r1, r1Content);
             }
         }
+        System.out.println(x);
 
     }
 

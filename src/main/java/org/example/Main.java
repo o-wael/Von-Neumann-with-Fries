@@ -27,12 +27,14 @@ public class Main {
 
 //        System.out.println();
 
-        Parser.readAssemblyFile();
-        System.out.println(MainMemory.getMainMemoryInstance().getCurNumOfInstructions());
-        for(String s: MainMemory.getMainMemoryInstance().getAssemblyMemory()) {
-            if (s != null)
-                System.out.println(s);
-        }
+//        Parser.readAssemblyFile();
+//        System.out.println(MainMemory.getMainMemoryInstance().getCurNumOfInstructions());
+//        for(String s: MainMemory.getMainMemoryInstance().getAssemblyMemory()) {
+//            if (s != null)
+//                System.out.println(s);
+//        }
+
+        System.out.println(6 >>> (-1 * -1));
     }
     
 }

@@ -5,19 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1eea1ce5-1b2b-4803-b7a9-e49f100711bc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/control/ControlUnit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/Parser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assembly.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/memory/MainMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/memory/MainMemory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/ControlUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ControlUnit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/memory/PipelineRegisters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/memory/PipelineRegisters.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/memory/RegisterFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/memory/RegisterFile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/stages/EX.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/stages/EX.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/stages/ID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/stages/ID.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/stages/IF.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/stages/IF.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/stages/MEM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/stages/MEM.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/stages/WB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/stages/WB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assembly.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assembly.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,16 +44,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/Omar Files/Von-Neumann-with-Fries",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Omar Files/Von-Neumann-with-Fries&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -67,6 +64,17 @@
       <updated>1684017636909</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/control/ControlUnit.java</url>
+          <line>91</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

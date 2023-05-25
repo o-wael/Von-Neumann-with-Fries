@@ -16,8 +16,13 @@ public class ID {
 
     public void decodeInstruction() {
 
-        if (PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("availableRight", 0) == 0)
+        HashMap<String, Integer> ID_EX = PipelineRegisters.getPipelineRegisterInstance().getID_EX();
+
+        ID_EX.put("availableLeft", PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("availableRight", 0));
+        if (PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("availableRight", 0) == 0) {
+            System.out.println("bs ya zbala");
             return;
+        }
 
         int instruction = PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("instructionRight", 0);
 
@@ -46,7 +51,7 @@ public class ID {
             immediate |= mask;
         }
 
-        HashMap<String, Integer> ID_EX = PipelineRegisters.getPipelineRegisterInstance().getID_EX();
+
 
         ID_EX.put("opcodeLeft", opcode);
         ID_EX.put("r1ContentLeft", 0);
@@ -58,7 +63,6 @@ public class ID {
         ID_EX.put("addressLeft", 0);
         ID_EX.put("regWriteLeft", 0);
         ID_EX.put("pcLeft", PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("pcRight", 0));
-        ID_EX.put("availableLeft", PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("availableRight", 0));
 
         int r1Content;
         int r2Content;
@@ -68,8 +72,10 @@ public class ID {
             case 1:
             case 8:
             case 9: {
+                r1Content = RegisterFile.getRegisterFileInstance().readFromRegister(r1);
                 r2Content = RegisterFile.getRegisterFileInstance().readFromRegister(r2);
                 r3Content = RegisterFile.getRegisterFileInstance().readFromRegister(r3);
+                ID_EX.put("r1ContentLeft", r1Content);
                 ID_EX.put("r2ContentLeft", r2Content);
                 ID_EX.put("r3ContentLeft", r3Content);
                 ID_EX.put("shamtLeft", shamt);
@@ -107,6 +113,27 @@ public class ID {
 
             }
 
+        }
+
+//        checkDataHazard(opcode, r1, r2, r3, shamt, immediate, address);
+
+    }
+
+    private void checkDataHazard(int opcode, int r1, int r2, int r3, int shamt, int immediate, int address) {
+
+        HashMap<String, Integer> IF_ID = PipelineRegisters.getPipelineRegisterInstance().getIF_ID();
+
+        if (IF_ID.getOrDefault("pcRight", 0) == 0)
+            return;
+
+        if (IF_ID.getOrDefault("r1Right", 0) == r1 && IF_ID.getOrDefault("regWriteRight", 0) == 1) {
+            if (opcode == 0 || opcode == 1 || opcode == 8 || opcode == 9) {
+                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1Left", r1);
+                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1ContentRight", IF_ID.getOrDefault("r1ContentRight", 0));
+            } else {
+                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1Right", r1);
+                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1ContentRight", IF_ID.getOrDefault("r1ContentRight", 0));
+            }
         }
 
     }
@@ -162,6 +189,7 @@ public class ID {
         int r3Content = RegisterFile.getRegisterFileInstance().readFromRegister(r3);
 
         System.out.println("Opcode: " + Integer.toBinaryString(opcode) + "\nR1: " + Integer.toBinaryString(r1) + "\nR2 Content: " + r2Content + "\nR3 Content: " + r3Content + "\nShamt: " + Integer.toBinaryString(shamt) + "\nImmediate: " + Integer.toBinaryString(immediate) + "\nAddress: " + Integer.toBinaryString(address));
+        System.out.println("available: " + PipelineRegisters.getPipelineRegisterInstance().getIF_ID().get("availableRight"));
     }
 
 }
