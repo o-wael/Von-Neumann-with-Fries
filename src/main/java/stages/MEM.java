@@ -9,12 +9,6 @@ public class MEM {
 
     private static final MEM memInstance = new MEM();
 
-    public static void propagate(int clockCycle) {
-
-        //TODO
-
-    }
-
     public static MEM getMEMInstance() {
         return memInstance;
     }
@@ -45,7 +39,6 @@ public class MEM {
         }
 
 
-
         MEM_WB.put("opcodeLeft", opcode);
         MEM_WB.put("r1Left", r1);
         MEM_WB.put("r2Left", r2);
@@ -61,15 +54,16 @@ public class MEM {
     public void print() {
         if (PipelineRegisters.getPipelineRegisterInstance().getEX_MEM().getOrDefault("availableRight", 0) == 0) {
             System.out.println("No instruction is executed in MEM stage");
+            System.out.println("------------------------------------------------------------");
             return;
         }
         int pc = PipelineRegisters.getPipelineRegisterInstance().getEX_MEM().getOrDefault("pcRight", 0);
         System.out.println("Instruction Being Executed in MEM stage: " + MainMemory.getMainMemoryInstance().assemblyRead(pc));
         printInput();
-        System.out.println("--------------------------------------------------");
+        System.out.println("------------------------------------------------------------");
         System.out.println("Outputs: ");
         printOutput();
-        System.out.println("--------------------------------------------------");
+        System.out.println("------------------------------------------------------------");
     }
 
     public void printInput() {
@@ -77,28 +71,87 @@ public class MEM {
 
         HashMap<String, Integer> EX_MEM = PipelineRegisters.getPipelineRegisterInstance().getEX_MEM();
 
-        System.out.println("Opcode: " + EX_MEM.get("opcodeRight"));
-        System.out.println("R1: " + EX_MEM.get("r1Right"));
-        System.out.println("R2: " + EX_MEM.get("r2Right"));
-        System.out.println("R3: " + EX_MEM.get("r3Right"));
-        System.out.println("R1 Content: " + EX_MEM.get("r1ContentRight"));
-        System.out.println("Immediate: " + EX_MEM.get("immediateRight"));
-        System.out.println("Register Write: " + EX_MEM.get("regWriteRight"));
-        System.out.println("ALU Result: " + EX_MEM.get("ALUResultRight"));
+        int opcode = EX_MEM.getOrDefault("opcodeRight", 0);
+        int r1 = EX_MEM.getOrDefault("r1Right", 0);
+        int r2 = EX_MEM.getOrDefault("r2Right", 0);
+        int r3 = EX_MEM.getOrDefault("r3Right", 0);
+        int r1Content = EX_MEM.getOrDefault("r1ContentRight", 0);
+        int immediate = EX_MEM.getOrDefault("immediateRight", 0);
+        int regWrite = EX_MEM.getOrDefault("regWriteRight", 0);
+        int ALUResult = EX_MEM.getOrDefault("ALUResultRight", 0);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Opcode: ");
+        sb.append("0".repeat(Math.max(0, 4 - Integer.toBinaryString(opcode).length())));
+        sb.append(Integer.toBinaryString(opcode));
+
+        sb.append("\nR1: ");
+        sb.append("0".repeat(Math.max(0, 5 - Integer.toBinaryString(r1).length())));
+        sb.append(Integer.toBinaryString(r1));
+
+        sb.append("\nR2: ");
+        sb.append("0".repeat(Math.max(0, 5 - Integer.toBinaryString(r2).length())));
+        sb.append(Integer.toBinaryString(r2));
+
+        sb.append("\nR3: ");
+        sb.append("0".repeat(Math.max(0, 5 - Integer.toBinaryString(r3).length())));
+        sb.append(Integer.toBinaryString(r3));
+
+        sb.append("\nR1 Content: ");
+        sb.append(r1Content);
+
+        sb.append("\nImmediate: ");
+        sb.append("0".repeat(Math.max(0, 18 - Integer.toBinaryString(immediate).length())));
+        sb.append(Integer.toBinaryString(immediate));
+
+        sb.append("\nRegWrite: ");
+        sb.append(regWrite);
+
+        sb.append("\nALU Result: ");
+        sb.append(ALUResult);
+
+        System.out.println(sb);
     }
 
     public void printOutput() {
 
         HashMap<String, Integer> MEM_WB = PipelineRegisters.getPipelineRegisterInstance().getMEM_WB();
 
-        System.out.println("Opcode: " + MEM_WB.get("opcodeLeft"));
-        System.out.println("R1: " + MEM_WB.get("r1Left"));
-        System.out.println("R2: " + MEM_WB.get("r2Left"));
-        System.out.println("R3: " + MEM_WB.get("r3Left"));
-        System.out.println("R1 Content: " + MEM_WB.get("r1ContentLeft"));
-        System.out.println("Register Write: " + MEM_WB.get("regWriteLeft"));
-        System.out.println("ALU Result: " + MEM_WB.get("ALUResultLeft"));
-        System.out.println("available: " + PipelineRegisters.getPipelineRegisterInstance().getEX_MEM().get("availableRight"));
+        int opcode = MEM_WB.getOrDefault("opcodeLeft", 0);
+        int r1 = MEM_WB.getOrDefault("r1Left", 0);
+        int r2 = MEM_WB.getOrDefault("r2Left", 0);
+        int r3 = MEM_WB.getOrDefault("r3Left", 0);
+        int r1Content = MEM_WB.getOrDefault("r1ContentLeft", 0);
+        int regWrite = MEM_WB.getOrDefault("regWriteLeft", 0);
+        int ALUResult = MEM_WB.getOrDefault("ALUResultLeft", 0);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Opcode: ");
+        sb.append("0".repeat(Math.max(0, 4 - Integer.toBinaryString(opcode).length())));
+        sb.append(Integer.toBinaryString(opcode));
+
+        sb.append("\nR1: ");
+        sb.append("0".repeat(Math.max(0, 5 - Integer.toBinaryString(r1).length())));
+        sb.append(Integer.toBinaryString(r1));
+
+        sb.append("\nR2: ");
+        sb.append("0".repeat(Math.max(0, 5 - Integer.toBinaryString(r2).length())));
+        sb.append(Integer.toBinaryString(r2));
+
+        sb.append("\nR3: ");
+        sb.append("0".repeat(Math.max(0, 5 - Integer.toBinaryString(r3).length())));
+        sb.append(Integer.toBinaryString(r3));
+
+        sb.append("\nR1 Content: ");
+        sb.append(r1Content);
+
+        sb.append("\nRegister Write: ");
+        sb.append(regWrite);
+
+        sb.append("\nALU Result: ");
+        sb.append(ALUResult);
+
+        System.out.println(sb);
 
     }
 

@@ -1,2 +1,4 @@
-ADDI R2 R0 3
-ADDI R3 R2 5
+AdDI R2 R0 3
+ADDi R3 r3 1
+bne r3 r2 -2
+addi r1 r1 1

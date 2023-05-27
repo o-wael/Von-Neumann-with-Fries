@@ -25,7 +25,7 @@ public class Parser {
 
     public static int parse(String instruction) {
         String[] instructionParts = instruction.split(" ");
-        String opcode = instructionParts[0];
+        String opcode = instructionParts[0].toUpperCase();
         StringBuilder sb = new StringBuilder();
         switch (opcode) {
             case "ADD" -> sb.append("0000");
