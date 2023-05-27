@@ -111,7 +111,7 @@ public class EX {
                 //j
                 int oldPC = PipelineRegisters.getPipelineRegisterInstance().getID_EX().getOrDefault("pcRight", 0);
                 //concatenate bits 31:28 of oldPC with bits 27:0 of address
-                ALUResult = (oldPC & 0b11110000000000000000000000000000) | address;
+                ALUResult = ((oldPC + 1) & 0b11110000000000000000000000000000) | address;
                 RegisterFile.getRegisterFileInstance().setPC(ALUResult);
                 ControlUnit.getControlUnitInstance().setBranchFlag(true);
             }

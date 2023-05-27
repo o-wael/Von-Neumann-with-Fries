@@ -6,14 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1eea1ce5-1b2b-4803-b7a9-e49f100711bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/ControlUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ControlUnit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/memory/PipelineRegisters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/memory/PipelineRegisters.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/stages/EX.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/stages/EX.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/stages/ID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/stages/ID.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/stages/IF.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/stages/IF.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/stages/MEM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/stages/MEM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/stages/WB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/stages/WB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/assembly.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assembly.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
