@@ -91,7 +91,7 @@ public class ControlUnit {
             if (curCycle == 19) {
                 System.out.println("");
             }
-            boolean fetchDoneFlag = (MainMemory.getMainMemoryInstance().assemblyRead(RegisterFile.getRegisterFileInstance().getPC() - 1) == null) && PipelineRegisters.getPipelineRegisterInstance().getID_EX().get("opcodeRight") != 4 && PipelineRegisters.getPipelineRegisterInstance().getID_EX().get("opcodeRight") != 7;
+            boolean fetchDoneFlag = (MainMemory.getMainMemoryInstance().assemblyRead(RegisterFile.getRegisterFileInstance().getPC() - 1) == null) && PipelineRegisters.getPipelineRegisterInstance().getID_EX().getOrDefault("opcodeRight",0) != 4 && PipelineRegisters.getPipelineRegisterInstance().getID_EX().getOrDefault("opcodeRight", 0) != 7;
             String x = MainMemory.getMainMemoryInstance().assemblyRead(RegisterFile.getRegisterFileInstance().getPC() - 1);
             int pc = RegisterFile.getRegisterFileInstance().getPC();
 

@@ -31,6 +31,8 @@ public class MEM {
 
         int opcode = EX_MEM.get("opcodeRight");
         int r1 = EX_MEM.get("r1Right");
+        int r2 = EX_MEM.get("r2Right");
+        int r3 = EX_MEM.get("r3Right");
         int r1Content = EX_MEM.get("r1ContentRight");
         int immediate = EX_MEM.get("immediateRight");
         int regWrite = EX_MEM.get("regWriteRight");
@@ -46,6 +48,8 @@ public class MEM {
 
         MEM_WB.put("opcodeLeft", opcode);
         MEM_WB.put("r1Left", r1);
+        MEM_WB.put("r2Left", r2);
+        MEM_WB.put("r3Left", r3);
         MEM_WB.put("r1ContentLeft", r1Content);
         MEM_WB.put("regWriteLeft", regWrite);
         MEM_WB.put("ALUResultLeft", ALUResult);
@@ -75,6 +79,8 @@ public class MEM {
 
         System.out.println("Opcode: " + EX_MEM.get("opcodeRight"));
         System.out.println("R1: " + EX_MEM.get("r1Right"));
+        System.out.println("R2: " + EX_MEM.get("r2Right"));
+        System.out.println("R3: " + EX_MEM.get("r3Right"));
         System.out.println("R1 Content: " + EX_MEM.get("r1ContentRight"));
         System.out.println("Immediate: " + EX_MEM.get("immediateRight"));
         System.out.println("Register Write: " + EX_MEM.get("regWriteRight"));
@@ -87,6 +93,8 @@ public class MEM {
 
         System.out.println("Opcode: " + MEM_WB.get("opcodeLeft"));
         System.out.println("R1: " + MEM_WB.get("r1Left"));
+        System.out.println("R2: " + MEM_WB.get("r2Left"));
+        System.out.println("R3: " + MEM_WB.get("r3Left"));
         System.out.println("R1 Content: " + MEM_WB.get("r1ContentLeft"));
         System.out.println("Register Write: " + MEM_WB.get("regWriteLeft"));
         System.out.println("ALU Result: " + MEM_WB.get("ALUResultLeft"));

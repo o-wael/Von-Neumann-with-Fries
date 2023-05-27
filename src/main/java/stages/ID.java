@@ -20,7 +20,6 @@ public class ID {
 
         ID_EX.put("availableLeft", PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("availableRight", 0));
         if (PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("availableRight", 0) == 0) {
-            System.out.println("bs ya zbala");
             return;
         }
 
@@ -63,6 +62,8 @@ public class ID {
         ID_EX.put("addressLeft", 0);
         ID_EX.put("regWriteLeft", 0);
         ID_EX.put("pcLeft", PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("pcRight", 0));
+        ID_EX.put("r2Left", r2);
+        ID_EX.put("r3Left", r3);
 
         int r1Content;
         int r2Content;
@@ -119,24 +120,24 @@ public class ID {
 
     }
 
-    private void checkDataHazard(int opcode, int r1, int r2, int r3, int shamt, int immediate, int address) {
-
-        HashMap<String, Integer> IF_ID = PipelineRegisters.getPipelineRegisterInstance().getIF_ID();
-
-        if (IF_ID.getOrDefault("pcRight", 0) == 0)
-            return;
-
-        if (IF_ID.getOrDefault("r1Right", 0) == r1 && IF_ID.getOrDefault("regWriteRight", 0) == 1) {
-            if (opcode == 0 || opcode == 1 || opcode == 8 || opcode == 9) {
-                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1Left", r1);
-                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1ContentRight", IF_ID.getOrDefault("r1ContentRight", 0));
-            } else {
-                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1Right", r1);
-                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1ContentRight", IF_ID.getOrDefault("r1ContentRight", 0));
-            }
-        }
-
-    }
+//    private void checkDataHazard(int opcode, int r1, int r2, int r3, int shamt, int immediate, int address) {
+//
+//        HashMap<String, Integer> IF_ID = PipelineRegisters.getPipelineRegisterInstance().getIF_ID();
+//
+//        if (IF_ID.getOrDefault("pcRight", 0) == 0)
+//            return;
+//
+//        if (IF_ID.getOrDefault("r2Right", 0) == r1 && IF_ID.getOrDefault("regWriteRight", 0) == 1) {
+//            if (opcode == 0 || opcode == 1 || opcode == 8 || opcode == 9) {
+//                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1Left", r1);
+//                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1ContentRight", IF_ID.getOrDefault("r1ContentRight", 0));
+//            } else {
+//                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1Right", r1);
+//                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1ContentRight", IF_ID.getOrDefault("r1ContentRight", 0));
+//            }
+//        }
+//
+//    }
 
     public void print() {
         if (PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("availableRight", 0) == 0) {
@@ -188,7 +189,7 @@ public class ID {
         int r2Content = RegisterFile.getRegisterFileInstance().readFromRegister(r2);
         int r3Content = RegisterFile.getRegisterFileInstance().readFromRegister(r3);
 
-        System.out.println("Opcode: " + Integer.toBinaryString(opcode) + "\nR1: " + Integer.toBinaryString(r1) + "\nR2 Content: " + r2Content + "\nR3 Content: " + r3Content + "\nShamt: " + Integer.toBinaryString(shamt) + "\nImmediate: " + Integer.toBinaryString(immediate) + "\nAddress: " + Integer.toBinaryString(address));
+        System.out.println("Opcode: " + Integer.toBinaryString(opcode) + "\nR1: " + Integer.toBinaryString(r1) + "\nR2: " + Integer.toBinaryString(r2) + "\nR3: " + Integer.toBinaryString(r3) + "\nR2 Content: " + r2Content + "\nR3 Content: " + r3Content + "\nShamt: " + Integer.toBinaryString(shamt) + "\nImmediate: " + Integer.toBinaryString(immediate) + "\nAddress: " + Integer.toBinaryString(address));
         System.out.println("available: " + PipelineRegisters.getPipelineRegisterInstance().getIF_ID().get("availableRight"));
     }
 

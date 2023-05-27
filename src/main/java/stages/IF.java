@@ -20,11 +20,9 @@ public class IF {
         System.out.println("in IF ---------------------------> " + MainMemory.getMainMemoryInstance().assemblyRead(pc));
         if (MainMemory.getMainMemoryInstance().assemblyRead(pc) == null) {
             PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("availableLeft", 0);
-            System.out.println("I am kofta : " + MainMemory.getMainMemoryInstance().assemblyRead(pc));
         }
         else {
             PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("availableLeft", 1);
-            System.out.println("I am here with assembly : " + MainMemory.getMainMemoryInstance().assemblyRead(pc));
         }
         this.pc = pc;
 //        System.out.println("PCinFetch----------------------------->" + this.pc);

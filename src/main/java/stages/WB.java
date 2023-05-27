@@ -29,6 +29,8 @@ public class WB {
 
         int opcode = MEM_WB.get("opcodeRight");
         int r1 = MEM_WB.get("r1Right");
+        int r2 = MEM_WB.get("r2Right");
+        int r3 = MEM_WB.get("r3Right");
         int r1Content = MEM_WB.get("r1ContentRight");
         int regWrite = MEM_WB.get("regWriteRight");
         int ALUResult = MEM_WB.get("ALUResultRight");
@@ -66,6 +68,8 @@ public class WB {
 
         System.out.println("Opcode: " + MEM_WB.get("opcodeRight"));
         System.out.println("R1: " + MEM_WB.get("r1Right"));
+        System.out.println("R2: " + MEM_WB.get("r2Right"));
+        System.out.println("R3: " + MEM_WB.get("r3Right"));
         System.out.println("R1 Content: " + MEM_WB.get("r1ContentRight"));
         System.out.println("Register Write: " + MEM_WB.get("regWriteRight"));
         System.out.println("ALU Result: " + MEM_WB.get("ALUResultRight"));
