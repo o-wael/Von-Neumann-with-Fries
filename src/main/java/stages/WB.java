@@ -22,13 +22,13 @@ public class WB {
             return;
         }
 
-        int opcode = MEM_WB.get("opcodeRight");
-        int r1 = MEM_WB.get("r1Right");
-        int r2 = MEM_WB.get("r2Right");
-        int r3 = MEM_WB.get("r3Right");
-        int r1Content = MEM_WB.get("r1ContentRight");
-        int regWrite = MEM_WB.get("regWriteRight");
-        int ALUResult = MEM_WB.get("ALUResultRight");
+        int opcode = MEM_WB.getOrDefault("opcodeRight", 0);
+        int r1 = MEM_WB.getOrDefault("r1Right", 0);
+        int r2 = MEM_WB.getOrDefault("r2Right", 0);
+        int r3 = MEM_WB.getOrDefault("r3Right", 0);
+        int r1Content = MEM_WB.getOrDefault("r1ContentRight", 0);
+        int regWrite = MEM_WB.getOrDefault("regWriteRight", 0);
+        int ALUResult = MEM_WB.getOrDefault("ALUResultRight", 0);
         if (regWrite == 1) {
             if (opcode == 0 || opcode == 1 || opcode == 2 || opcode == 3 || opcode == 5 || opcode == 6 || opcode == 8 || opcode == 9) {
                 RegisterFile.getRegisterFileInstance().writeToRegister(r1, ALUResult);
@@ -105,13 +105,14 @@ public class WB {
 
         System.out.println("None");
 
-        if (MEM_WB.getOrDefault("opcodeRight", 0) == 11){
+        if (MEM_WB.getOrDefault("regWriteRight", 0) == 1) {
             System.out.println("------------------------------------------------------------");
-            System.out.println("Memory location " + MEM_WB.get("ALUResultRight") + " is written with value " + MEM_WB.get("r1ContentRight"));
-        }
-        else if (MEM_WB.getOrDefault("regWriteRight", 0) == 1) {
-            System.out.println("------------------------------------------------------------");
-            System.out.println("Register " + MEM_WB.get("r1Right") + " is written with value " + MEM_WB.get("ALUResultRight"));
+            if (MEM_WB.getOrDefault("opcodeRight", 0) == 10) {
+                System.out.println("Register " + MEM_WB.get("r1Right") + " is written with value " + MEM_WB.get("r1ContentRight"));
+            }
+            else {
+                System.out.println("Register " + MEM_WB.get("r1Right") + " is written with value " + MEM_WB.get("ALUResultRight"));
+            }
         }
 
     }

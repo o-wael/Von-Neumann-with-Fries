@@ -23,14 +23,14 @@ public class MEM {
             return;
         }
 
-        int opcode = EX_MEM.get("opcodeRight");
-        int r1 = EX_MEM.get("r1Right");
-        int r2 = EX_MEM.get("r2Right");
-        int r3 = EX_MEM.get("r3Right");
-        int r1Content = EX_MEM.get("r1ContentRight");
-        int immediate = EX_MEM.get("immediateRight");
-        int regWrite = EX_MEM.get("regWriteRight");
-        int ALUResult = EX_MEM.get("ALUResultRight");
+        int opcode = EX_MEM.getOrDefault("opcodeRight", 0);
+        int r1 = EX_MEM.getOrDefault("r1Right", 0);
+        int r2 = EX_MEM.getOrDefault("r2Right", 0);
+        int r3 = EX_MEM.getOrDefault("r3Right", 0);
+        int r1Content = EX_MEM.getOrDefault("r1ContentRight", 0);
+        int immediate = EX_MEM.getOrDefault("immediateRight", 0);
+        int regWrite = EX_MEM.getOrDefault("regWriteRight", 0);
+        int ALUResult = EX_MEM.getOrDefault("ALUResultRight", 0);
 
         if (opcode == 10) {
             r1Content = MainMemory.getMainMemoryInstance().memRead(ALUResult);
@@ -152,6 +152,13 @@ public class MEM {
         sb.append(ALUResult);
 
         System.out.println(sb);
+
+        HashMap<String, Integer> EX_MEM = PipelineRegisters.getPipelineRegisterInstance().getEX_MEM();
+
+        if (EX_MEM.getOrDefault("opcodeRight", 0) == 11){
+            System.out.println("------------------------------------------------------------");
+            System.out.println("Memory location " + EX_MEM.get("ALUResultRight") + " is written with value " + EX_MEM.get("r1ContentRight"));
+        }
 
     }
 
