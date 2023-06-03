@@ -1,7 +1,5 @@
 package memory;
 
-import stages.IF;
-
 import java.util.HashMap;
 
 public class PipelineRegisters {
@@ -40,6 +38,8 @@ public class PipelineRegisters {
 
         ID_EX.put("opcodeRight", ID_EX.getOrDefault("opcodeLeft", 0));
         ID_EX.put("r1Right", ID_EX.getOrDefault("r1Left", 0));
+        ID_EX.put("r2Right", ID_EX.getOrDefault("r2Left", 0));
+        ID_EX.put("r3Right", ID_EX.getOrDefault("r3Left", 0));
         ID_EX.put("r1ContentRight", ID_EX.getOrDefault("r1ContentLeft", 0));
         ID_EX.put("r2ContentRight", ID_EX.getOrDefault("r2ContentLeft", 0));
         ID_EX.put("r3ContentRight", ID_EX.getOrDefault("r3ContentLeft", 0));
@@ -59,6 +59,8 @@ public class PipelineRegisters {
 
         EX_MEM.put("opcodeRight", EX_MEM.getOrDefault("opcodeLeft", 0));
         EX_MEM.put("r1Right", EX_MEM.getOrDefault("r1Left", 0));
+        EX_MEM.put("r2Right", EX_MEM.getOrDefault("r2Left", 0));
+        EX_MEM.put("r3Right", EX_MEM.getOrDefault("r3Left", 0));
         EX_MEM.put("r1ContentRight", EX_MEM.getOrDefault("r1ContentLeft", 0));
         EX_MEM.put("immediateRight", EX_MEM.getOrDefault("immediateLeft", 0));
         EX_MEM.put("regWriteRight", EX_MEM.getOrDefault("regWriteLeft", 0));
@@ -75,19 +77,19 @@ public class PipelineRegisters {
 
         MEM_WB.put("opcodeRight", MEM_WB.getOrDefault("opcodeLeft", 0));
         MEM_WB.put("r1Right", MEM_WB.getOrDefault("r1Left", 0));
+        MEM_WB.put("r2Right", MEM_WB.getOrDefault("r2Left", 0));
+        MEM_WB.put("r3Right", MEM_WB.getOrDefault("r3Left", 0));
         MEM_WB.put("r1ContentRight", MEM_WB.getOrDefault("r1ContentLeft", 0));
         MEM_WB.put("regWriteRight", MEM_WB.getOrDefault("regWriteLeft", 0));
         MEM_WB.put("ALUResultRight", MEM_WB.getOrDefault("ALUResultLeft", 0));
         MEM_WB.put("pcRight", MEM_WB.getOrDefault("pcLeft", 0));
         MEM_WB.put("availableRight", MEM_WB.getOrDefault("availableLeft", 0));
-//        System.out.println("MEM/WB----------------->availableRight = " + MEM_WB.get("availableRight"));
 
     }
 
     public static void flush() {
         PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("availableLeft", 0);
         PipelineRegisters.getPipelineRegisterInstance().getID_EX().put("availableLeft", 0);
-        System.out.println("flushed successfully");
     }
 
     public HashMap<String, Integer> getIF_ID() {
@@ -108,8 +110,6 @@ public class PipelineRegisters {
 
     public void propagateData(int clockCycle) {
 
-
-
         if (clockCycle % 2 == 1) {
             propagate_IF_ID();
             if (clockCycle >= 3) {
@@ -122,11 +122,6 @@ public class PipelineRegisters {
             if (clockCycle >= 6)
                 propagate_MEM_WB();
         }
-
-//        System.out.println("IF/ID----------------->availableRight = " + PipelineRegisters.getPipelineRegisterInstance().getIF_ID().get("availableRight"));
-//        System.out.println("ID/EX----------------->availableRight = " + PipelineRegisters.getPipelineRegisterInstance().getID_EX().get("availableRight"));
-//        System.out.println("EX/MEM----------------->availableRight = " + PipelineRegisters.getPipelineRegisterInstance().getEX_MEM().get("availableRight"));
-//        System.out.println("MEM/WB----------------->availableRight = " + PipelineRegisters.getPipelineRegisterInstance().getMEM_WB().get("availableRight"));
 
     }
 }

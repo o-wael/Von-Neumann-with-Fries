@@ -20,7 +20,6 @@ public class ID {
 
         ID_EX.put("availableLeft", PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("availableRight", 0));
         if (PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("availableRight", 0) == 0) {
-            System.out.println("bs ya zbala");
             return;
         }
 
@@ -51,8 +50,6 @@ public class ID {
             immediate |= mask;
         }
 
-
-
         ID_EX.put("opcodeLeft", opcode);
         ID_EX.put("r1ContentLeft", 0);
         ID_EX.put("r2ContentLeft", 0);
@@ -63,15 +60,14 @@ public class ID {
         ID_EX.put("addressLeft", 0);
         ID_EX.put("regWriteLeft", 0);
         ID_EX.put("pcLeft", PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("pcRight", 0));
+        ID_EX.put("r2Left", r2);
+        ID_EX.put("r3Left", r3);
 
         int r1Content;
         int r2Content;
         int r3Content;
         switch (opcode) {
-            case 0:
-            case 1:
-            case 8:
-            case 9: {
+            case 0, 1, 8, 9 -> {
                 r1Content = RegisterFile.getRegisterFileInstance().readFromRegister(r1);
                 r2Content = RegisterFile.getRegisterFileInstance().readFromRegister(r2);
                 r3Content = RegisterFile.getRegisterFileInstance().readFromRegister(r3);
@@ -81,20 +77,11 @@ public class ID {
                 ID_EX.put("shamtLeft", shamt);
                 ID_EX.put("r1Left", r1);
                 ID_EX.put("regWriteLeft", 1);
-                break;
             }
-            case 7: {
-                //TODO: check if this is correct
-                //to be reviewed / moved to execute
-//                int oldPC = RegisterFile.getRegisterFileInstance().getPC();
-//                //concatenate bits 31:28 of oldPC with bits 27:0 of address
-//                int newPC = (oldPC & 0b11110000000000000000000000000000) | address;
-//                RegisterFile.getRegisterFileInstance().setPC(newPC);
+            case 7 -> {
                 ID_EX.put("addressLeft", address);
-                break;
             }
-            case 4:
-            case 11: {
+            case 4, 11 -> {
                 r1Content = RegisterFile.getRegisterFileInstance().readFromRegister(r1);
                 r2Content = RegisterFile.getRegisterFileInstance().readFromRegister(r2);
                 ID_EX.put("r1ContentLeft", r1Content);
@@ -102,7 +89,7 @@ public class ID {
                 ID_EX.put("immediateLeft", immediate);
                 ID_EX.put("r1Left", r1);
             }
-            default: {
+            case 2, 3, 5, 6, 10 -> {
                 r1Content = RegisterFile.getRegisterFileInstance().readFromRegister(r1);
                 r2Content = RegisterFile.getRegisterFileInstance().readFromRegister(r2);
                 ID_EX.put("r1ContentLeft", r1Content);
@@ -110,29 +97,6 @@ public class ID {
                 ID_EX.put("immediateLeft", immediate);
                 ID_EX.put("r1Left", r1);
                 ID_EX.put("regWriteLeft", 1);
-
-            }
-
-        }
-
-//        checkDataHazard(opcode, r1, r2, r3, shamt, immediate, address);
-
-    }
-
-    private void checkDataHazard(int opcode, int r1, int r2, int r3, int shamt, int immediate, int address) {
-
-        HashMap<String, Integer> IF_ID = PipelineRegisters.getPipelineRegisterInstance().getIF_ID();
-
-        if (IF_ID.getOrDefault("pcRight", 0) == 0)
-            return;
-
-        if (IF_ID.getOrDefault("r1Right", 0) == r1 && IF_ID.getOrDefault("regWriteRight", 0) == 1) {
-            if (opcode == 0 || opcode == 1 || opcode == 8 || opcode == 9) {
-                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1Left", r1);
-                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1ContentRight", IF_ID.getOrDefault("r1ContentRight", 0));
-            } else {
-                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1Right", r1);
-                PipelineRegisters.getPipelineRegisterInstance().getIF_ID().put("r1ContentRight", IF_ID.getOrDefault("r1ContentRight", 0));
             }
         }
 
@@ -141,20 +105,25 @@ public class ID {
     public void print() {
         if (PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("availableRight", 0) == 0) {
             System.out.println("No instruction is executed in ID stage");
+            System.out.println("------------------------------------------------------------");
             return;
         }
         int pc = PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("pcRight", 0);
         System.out.println("Instruction Being Executed in ID stage: " + MainMemory.getMainMemoryInstance().assemblyRead(pc));
         printInput();
-        System.out.println("--------------------------------------------------");
+        System.out.println("------------------------------------------------------------");
         System.out.print("Outputs: ");
         printOutput();
-        System.out.println("--------------------------------------------------");
+        System.out.println("------------------------------------------------------------");
     }
 
     public void printInput() {
         System.out.println("Inputs: ");
-        System.out.println("Instruction: " + Integer.toBinaryString(PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("instructionRight", 0)));
+        StringBuilder sb = new StringBuilder();
+        sb.append("Instruction: ");
+        sb.append("0".repeat(Math.max(0, 32 - Integer.toBinaryString(PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("instructionRight", 0)).length())));
+        sb.append(Integer.toBinaryString(PipelineRegisters.getPipelineRegisterInstance().getIF_ID().getOrDefault("instructionRight", 0)));
+        System.out.println(sb);
     }
 
     public void printOutput() {
@@ -185,11 +154,53 @@ public class ID {
                 mask |= (1 << i);
             immediate |= mask;
         }
+
+        int r1Content = RegisterFile.getRegisterFileInstance().readFromRegister(r1);
         int r2Content = RegisterFile.getRegisterFileInstance().readFromRegister(r2);
         int r3Content = RegisterFile.getRegisterFileInstance().readFromRegister(r3);
 
-        System.out.println("Opcode: " + Integer.toBinaryString(opcode) + "\nR1: " + Integer.toBinaryString(r1) + "\nR2 Content: " + r2Content + "\nR3 Content: " + r3Content + "\nShamt: " + Integer.toBinaryString(shamt) + "\nImmediate: " + Integer.toBinaryString(immediate) + "\nAddress: " + Integer.toBinaryString(address));
-        System.out.println("available: " + PipelineRegisters.getPipelineRegisterInstance().getIF_ID().get("availableRight"));
+        StringBuilder sb = new StringBuilder();
+        sb.append("Opcode: ");
+        sb.append("0".repeat(Math.max(0, 4 - Integer.toBinaryString(opcode).length())));
+        sb.append(Integer.toBinaryString(opcode));
+
+        sb.append("\nR1: ");
+        sb.append("0".repeat(Math.max(0, 5 - Integer.toBinaryString(r1).length())));
+        sb.append(Integer.toBinaryString(r1));
+
+        sb.append("\nR2: ");
+        sb.append("0".repeat(Math.max(0, 5 - Integer.toBinaryString(r2).length())));
+        sb.append(Integer.toBinaryString(r2));
+
+        sb.append("\nR3: ");
+        sb.append("0".repeat(Math.max(0, 5 - Integer.toBinaryString(r3).length())));
+        sb.append(Integer.toBinaryString(r3));
+
+        sb.append("\nR1 Content: ");
+        sb.append(r1Content);
+
+        sb.append("\nR2 Content: ");
+        sb.append(r2Content);
+
+        sb.append("\nR3 Content: ");
+        sb.append(r3Content);
+
+        sb.append("\nShamt: ");
+        sb.append("0".repeat(Math.max(0, 13 - Integer.toBinaryString(shamt).length())));
+        sb.append(Integer.toBinaryString(shamt));
+
+        sb.append("\nImmediate: ");
+        sb.append("0".repeat(Math.max(0, 18 - Integer.toBinaryString(immediate).length())));
+        sb.append(Integer.toBinaryString(immediate));
+
+        sb.append("\nAddress: ");
+        sb.append("0".repeat(Math.max(0, 28 - Integer.toBinaryString(address).length())));
+        sb.append(Integer.toBinaryString(address));
+
+        sb.append("\nRegister Write: ");
+        sb.append(PipelineRegisters.getPipelineRegisterInstance().getID_EX().get("regWriteLeft"));
+
+        System.out.println(sb);
     }
 
 }
