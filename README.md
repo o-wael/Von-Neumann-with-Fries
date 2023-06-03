@@ -11,7 +11,7 @@ This is a simple implementation of the Von Neumann architecture in Java.
   - Data Memory: 1024 * 32 bits
   - Instruction Memory: 1024 * 32 bits
 
-  | Memory | Address Range |
+    | Memory | Address Range |
     | ------ | ------------- |
     | Data Memory | 1024 - 2047 |
     | Instruction Memory | 0 - 1023 |
