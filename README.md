@@ -4,7 +4,7 @@
 
 This is a simple implementation of the Von Neumann architecture in Java.
 
-### Memory Architecture
+### Memory Architecture:
 
 - Memory Size: 2048 * 32 bits
 - Memory is divided into 2 main parts:
